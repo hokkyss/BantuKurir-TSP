@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, json
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -8,7 +8,8 @@ def home():
     print(request.form)
     return render_template('index.html')
     print(request.form)
-    user = request.form["user"]
+    locations = request.form["locations"]
+    goal = request.form["goal"]
     date = request.form["date"]
     file = request.form["files"]
     return redirect(url_for("result", type=user))

@@ -1,0 +1,37 @@
+.upper-half {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: aqua;
+  width: 100%;
+}
+
+.lower-half {
+  display: flex;
+  background-color: yellow;
+  justify-content: center;
+  align-items: center;
+}
+
+.manual-input {
+  background-color: red;
+}
+
+.file-input {
+  background-color: green;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+label {
+  width: 100px;
+}
+
+input,
+textarea {
+  width: 200px;
+}
