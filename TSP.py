@@ -45,83 +45,24 @@ def reduce(adj_matrix) -> tuple:
     return (result, cost)
 
 class Node:
-    '''
-    def __init__(self, city: str, adj_matrix: list):
-        self.city = city
-        self.adj_matrix = adj_matrix
-        self.adj_matrix, self.cost = self.reduce()
-        self.path = [city]
-    '''
     def __init__(self, city: str, adj_matrix: list, cost: int, path: list):
         self.city = city
         self.adj_matrix = adj_matrix
         self.cost = cost
         self.path = path
-    '''
-    def __init__(self, *args: list):
-        self.city = args[0]
-        self.adj_matrix = args[1]
-
-        if len(args) == 2:
-            self.adj_matrix, self.cost = reduce(args[1])
-            self.path = [args[0]]
-        elif len(args) == 4:
-            self.cost = args[3]
-            self.path = path
-    '''
     
     def __str__(self) -> str:
         from_matrix = ""
         for row in self.adj_matrix:
             from_matrix = from_matrix.__add__(str(row) + "\n")
         return from_matrix + str(self.cost) + "\n" + str(self.path) + "\n"
-    
-    def reduce(self) -> tuple:
-        result = [(row.copy()) for row in self.adj_matrix]
-        cost = 0
-        N = len(result)
-
-        # iterate row
-        for i in range(N):
-            subtractor = -1
-            for j in range(N):
-                if (result[i][j] == -1):
-                    continue
-                if(subtractor == -1):
-                    subtractor = result[i][j]
-                    continue
-                subtractor = min(subtractor, result[i][j])
-
-            cost += subtractor
-            for j in range(N):
-                if(result[i][j] == -1): continue
-
-                result[i][j] -= subtractor
-
-        # iterate column
-        for j in range(N):
-            subtractor = -1
-            for i in range(N):
-                if(result[i][j] == -1): 
-                    continue
-                if subtractor == -1:
-                    subtractor = result[i][j]
-                    continue                    
-                subtractor = min(result[i][j], subtractor)
-
-            cost += subtractor
-            for i in range(N):
-                if(result[i][j] == -1): continue
-                result[i][j] -= subtractor
-
-        return (result, cost)
 
 class Graph:
     def __init__(self, first_city_name: str, adj_matrix: list, city_list: list):
-        self.adj_matrix: list = adj_matrix
-        self.city_list: list = city_list
-        self.first_city_name: str = first_city_name
-        self.N: int = len(adj_matrix)
+        self.adj_matrix = adj_matrix
+        self.city_list = city_list
+        self.first_city_name = first_city_name
+        self.N = len(adj_matrix)
 
     @staticmethod
     def parse_file(file_stream):
