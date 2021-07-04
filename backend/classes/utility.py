@@ -1,6 +1,3 @@
-def euclidean_distance(city1, city2) -> float:
-    pass
-
 def reduce_matrix(adj_matrix) -> tuple:
     result = [(row.copy()) for row in adj_matrix]
     cost = 0

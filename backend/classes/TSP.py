@@ -1,5 +1,5 @@
-from BnBNode import Node
-from utility import reduce_matrix as reduce, euclidean_distance
+from .BnBNode import Node
+from .utility import reduce_matrix as reduce
 
 class Graph:
     # constructor
@@ -8,19 +8,6 @@ class Graph:
         self.city_list = city_list
         self.first_city_name = first_city_name
         self.N = len(adj_matrix)
-
-    @staticmethod
-    def parse_file(file_stream):
-        blob = file_stream.stream.read()
-
-        print(blob)
-
-        if blob == None:
-            return []
-
-        text = blob.decode("UTF8")
-        print(text)
-        pass
 
     # Approximate TSP solution using BnB
     def BranchAndBound(self) -> tuple:

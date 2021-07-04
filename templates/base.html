@@ -12,17 +12,17 @@
     {% block style %} {% endblock style %}
   </head>
 
-  <body>
-    <div class="container">
-      <!-- ======= Content ======= -->
-      {% block content %} {% endblock content %}
+  <div class="navbar"></div>
+
+  <div class="container">
+    <!-- ======= Content ======= -->
+    {% block content %} {% endblock content %}
+  </div>
+  <footer>
+    <div class="footer">
+      &copy; 2021 <a href="https://github.com/hokkyss">Hokki Suwanda</a>
     </div>
-    <footer>
-      <div class="footer">
-        &copy; 2021 <a href="https://github.com/hokkyss">Hokki Suwanda</a>
-      </div>
-    </footer>
-    <!-- Script -->
-    {% block script %} {% endblock script %}
-  </body>
+  </footer>
+  <!-- Script -->
+  {% block script %} {% endblock script %}
 </html>

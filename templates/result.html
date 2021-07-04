@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block head %}
+<title>Result</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/result.css') }}"
+/>
+{% endblock head %} {% block style %}{% endblock style %} {% block content %}
+<div class="top">
+  <form
+    enctype="multipart/form-data"
+    style="width: 100%; height: 100%"
+    action=""
+    method="POST"
+  >
+    <input type="text" name="sender" />
+    <input type="date" name="sent_on" />
+    <input type="submit" value="search" />
+  </form>
+</div>
+<div class="bottom"></div>
+{% endblock content %}

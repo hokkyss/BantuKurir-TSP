@@ -1,46 +1,69 @@
 {% extends "base.html" %} {% block head %}
 <title>Main page</title>
+{% endblock head %} {% block style %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/index.css') }}"
 />
-{% endblock head %} {% block style %}{% endblock style %} {% block content %}
-<p>{{ type }}</p>
-<form style="width: 100%; height: 100%" action="" method="POST">
+{% endblock style %} {% block content %}
+<form
+  enctype="multipart/form-data"
+  style="width: 100%; height: 100%"
+  action=""
+  method="POST"
+>
   <div class="upper-half">
+    {% if (step == 1) %}
     <div class="manual-input">
-      <div class="location-list">
-        <div class="input">
-          <label for="locations">Locations</label>
-          <textarea
-            name="locations"
-            required
-            rows="5"
-            style="resize: none"
-          ></textarea>
-        </div>
+      <div class="input">
+        <label for="sender">Sender</label>
+        <input type="text" name="sender" required />
       </div>
-      <div class="location-name">
-        <div class="input">
-          <label for="goal">Goal location</label>
-          <input type="text" name="goal" required />
-        </div>
+      <div class="input">
+        <label for="sent_on">Date</label>
+        <input type="date" name="sent_on" />
       </div>
-      <div>
-        <div class="delivery-date">
-          <div class="input">
-            <label for="date">Date</label>
-            <input type="date" name="date" />
-          </div>
-        </div>
+      <div class="input">
+        <label for="speed">Average speed (km/h)</label>
+        <input type="number" name="speed" step="any" required />
       </div>
     </div>
+    {% elif (step == 2) %}
+    <a href="{{ url_for('second_step_file') }}">Upload files instead!</a>
+    <textarea
+      name="locations"
+      required
+      rows="10"
+      style="resize: none"
+    ></textarea>
+    {% elif (step == 3) %}
+    <a href="{{ url_for('second_step') }}">Type your input!</a>
     <div class="file-input">
-      <input type="file" name="file" accept=".txt, .csv" multiple />
+      <input type="file" name="file" accept=".json" multiple />
     </div>
+    {% else %}
+    <div class="manual-input">
+      <div class="input">
+        <label for="start">Your starting point</label>
+        <select name="start">
+          {% for loc in locations %}
+          <option class="option" value="{{ loc['name'] }}">
+            {{ loc["name"] }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    {% endif %}
   </div>
   <div class="lower-half">
-    <input type="submit" value="submit" />
+    {% if (step == 4) %}
+    <input type="submit" value="Submit" />
+    {% else %}
+    <input type="submit" value="Next" />
+    {% endif %}
   </div>
 </form>
-{% endblock content %}
+{% endblock content %}{% block script %}
+<script type="text/javascript"></script>
+{% endblock script %}

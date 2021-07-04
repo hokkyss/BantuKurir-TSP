@@ -1,0 +1,16 @@
+[
+  {
+    "name": "A",
+    "coordinates": {
+      "lng": 0,
+      "lat": 0
+    }
+  },
+  {
+    "name": "B",
+    "coordinates": {
+      "lng": 100,
+      "lat": 100
+    }
+  }
+]
