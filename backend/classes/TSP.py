@@ -20,7 +20,6 @@ class Graph:
 
         while len(priority_queue) > 0:
             first = priority_queue.pop(0)
-            # print(first)
 
             # we have reached our solution
             if len(first.path) == self.N:

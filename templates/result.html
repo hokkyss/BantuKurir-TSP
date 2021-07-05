@@ -1,21 +1,152 @@
 {% extends "base.html" %} {% block head %}
 <title>Result</title>
+{% endblock head %} {% block style %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.14.0/maps/maps.css"
+/>
+<style>
+  #map {
+    width: 100vw;
+    height: 440px;
+  }
+</style>
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/result.css') }}"
 />
-{% endblock head %} {% block style %}{% endblock style %} {% block content %}
-<div class="top">
-  <form
-    enctype="multipart/form-data"
-    style="width: 100%; height: 100%"
-    action=""
-    method="POST"
-  >
-    <input type="text" name="sender" />
-    <input type="date" name="sent_on" />
+{% endblock style %} {% block content %}
+
+<form
+  enctype="multipart/form-data"
+  style="width: 100%; height: 100%"
+  action=""
+  method="POST"
+>
+  <div class="top">
+    <div class="input">
+      <input type="text" name="sender" placeholder="Courier name" required />
+    </div>
+    <div class="input">
+      <input type="date" name="sent_on" />
+    </div>
     <input type="submit" value="search" />
-  </form>
+  </div>
+</form>
+<div class="bottom">
+  <div id="map" class="map"></div>
 </div>
-<div class="bottom"></div>
-{% endblock content %}
+{% endblock content %} {% block script %}
+<script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.14.0/maps/maps-web.min.js"></script>
+<script>
+  const locations = {{ locations|tojson|safe }};
+  const result = {{ result|tojson|safe }};
+  const need_alert = {{ need_alert|tojson|safe }}
+
+  const is_found = locations && result;
+  console.log(locations, result, is_found, need_alert)
+
+  tt.setProductInfo("BantuKurir-TSP", "1.0");
+  const map = tt.map({
+    key: "RRF5SbdgsyPTbw2a6yRBv1TAv7WTZ3RT",
+    container: "map",
+    center: is_found ? [locations[0]["lng"], locations[0]["lat"]] : [107.6084704, -6.8914747],
+    zoom: 15,
+  });
+
+  if (!is_found) {
+    if (need_alert)
+    {
+      alert("Expedition data not found!")
+    }
+  }
+  else {
+    const {distance, path} = result
+    const markers = [];
+
+    const createMarker = (loc) => {
+      const pos = [loc["lng"], loc["lat"]];
+      const marker = new tt.Marker().setLngLat(pos).addTo(map);
+      markers.push(marker);
+    };
+
+    const popupOffsets = {
+      top: [0, 0],
+      bottom: [0, -30],
+      'bottom-right': [0, -70],
+      'bottom-left': [0, -70],
+      left: [25, -35],
+      right: [-25, -35]
+    };
+
+    displayMarkers = () => {
+      locations.forEach((loc, index) => {
+        createMarker(loc);
+
+        const popup = new tt.Popup({offset: popupOffsets}).setHTML(loc["name"]);
+        markers[index].setPopup(popup).togglePopup();
+      })
+    };
+
+    displayAllPaths = () => {
+      locations.forEach((loc, index) => {
+        for(var i = index + 1; i < locations.length; i++) {
+          map.addLayer({
+            'id': `route${index}${i}`,
+            'type': 'line',
+            'source': {
+              'type' : 'geojson',
+              'data': {
+                'type': 'Feature',
+                'geometry': {
+                  'type': 'LineString',
+                  'coordinates':
+                  [[loc["lng"], loc["lat"]], [locations[i]["lng"], locations[i]["lat"]]]
+                }
+              }
+            },
+            'paint' : {
+              'line-color': 'black',
+              'line-width': 2
+            }
+          })
+        }
+      })
+    };
+
+    displayPaths = () => {
+      path.forEach((loc, index) => {
+        if (index === path.lastIndex) return
+
+        map.addLayer({
+          'id': `path${index}${index + 1}`,
+          'type': 'line',
+          'source': {
+            'type' : 'geojson',
+            'data': {
+              'type': 'Feature',
+              'geometry': {
+                'type': 'LineString',
+                'coordinates': [
+                  [loc["lng"], loc["lat"]], [path[index + 1]["lng"], path[index + 1]["lat"]]
+                ]
+              }
+            }
+          },
+          'paint' : {
+            'line-color': 'red',
+            'line-width': 5
+          }
+        })
+      })
+    };
+
+    map.on('load', () => {
+      displayMarkers();
+      displayAllPaths();
+      displayPaths();
+    });
+  }
+</script>
+{% endblock script %}

@@ -3,24 +3,20 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: aqua;
   width: 100%;
   height: 200px;
 }
 
 .lower-half {
   display: flex;
-  background-color: yellow;
   justify-content: center;
   align-items: center;
 }
 
 .manual-input {
-  background-color: red;
 }
 
 .file-input {
-  background-color: green;
 }
 
 .input {

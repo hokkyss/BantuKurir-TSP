@@ -114,19 +114,36 @@ def third_step_validation():
 
 @app.route("/path", methods=["GET", "POST"])
 def result():
-    sender = request.args.get("sender")
-    sent_on = request.args.get("sent_on")
+    if (request.method == "POST"):
+        redirect(url_for("result"))
+
+    # has just filled the form until the very last step
+    if (session.get("start") != None):
+        sender = session["sender"]
+        sent_on = session["sent_on"]
+    else:
+        sender = request.form.get("sender")
+        sent_on = request.form.get("sent_on")
+
+    session.clear()
 
     if(sender == None):
-        result = get_latest()
+        return render_template('result.html', need_alert=False, locations=None, result=None)
+
+    if(sent_on == None):
+        sent_on = date.today()
+
+    result = get_by_name_and_date(sender=sender, sent_on=sent_on)
+    try:
         (_, sender, date, locations, start, result, speed) = result
-        # return jsonify(from_JSON(locations.decode("UTF8")))
-        return from_JSON(result.decode("UTF8"))
-    elif(sent_on == None):
-        result = get_by_name_and_date(sender=sender)
-    else:
-        result = get_by_name_and_date(sender=sender, sent_on=sent_on)
-    return render_template('result.html')
+        locations = locations.decode("UTF8")
+        locations = from_JSON(locations)
+        result  = result.decode("UTF8")
+
+        result = from_JSON(result)
+        return render_template('result.html', need_alert=False, locations=locations, result=result)
+    except:
+        return render_template('result.html', need_alert=True, locations=None, result=None)
 
 if __name__ == '__main__':
     app.run()

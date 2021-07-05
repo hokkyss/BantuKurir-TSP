@@ -5,13 +5,13 @@ class Location(dict):
         self["name"] = name
         self["lng"] = lng
         self["lat"] = lat
-        
+    
     def haversine(self, other) -> float:
-        pi1 = self["lat"] * pi / 180
-        pi2 = other["lat"] * pi / 180
+        pi1 = float(self["lat"]) * pi / 180
+        pi2 = float(other["lat"]) * pi / 180
 
-        deltaPi = (self["lat"] - other["lat"]) * pi / 360
-        deltaLambda = (self["lng"] - other["lng"]) * pi / 360
+        deltaPi = (float(self["lat"]) - float(other["lat"])) * pi / 360
+        deltaLambda = (float(self["lng"]) - float(other["lng"])) * pi / 360
         
         a = pow(sin(deltaPi), 2) + (cos(pi1) * cos(pi2) * pow(sin(deltaLambda), 2))
 
@@ -50,4 +50,4 @@ class Location(dict):
         }
 
     def __str__(self) -> str:
-        return self["name"] + " " + str(self["lng"]) + " " + str(self["lat"])
+        return super().__str__()

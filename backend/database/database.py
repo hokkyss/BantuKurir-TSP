@@ -88,16 +88,13 @@ def get_by_name_and_date(sender: str, sent_on: date=datetime.now().date):
     database.autocommit = True
     cursor = database.cursor()
 
-    sender = sender
-    sent_on = str(sent_on)
+    sender = "'".__add__(sender).__add__("'")
+    sent_on = "'".__add__(str(sent_on)).__add__("'")
     
-    cursor.execute("SELECT * FROM " + DB_TABLE_NAME + " WHERE SENDER=" + sender + " AND SENT_ON=" + sent_on)
+    cursor.execute("SELECT * FROM " + DB_TABLE_NAME + " WHERE SENDER=" + sender + " AND SENT_ON=" + sent_on + " ORDER BY ID DESC LIMIT 1")
     all_attributes = cursor.fetchone()
 
-    if(all_attributes == None):
-        return ''
-    else:
-        return all_attributes
+    return all_attributes
 
 '''
 def delete():
