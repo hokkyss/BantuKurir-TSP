@@ -17,7 +17,7 @@ class Location(dict):
 
         # c = 2 * atan2(sqrt(a), sqrt(1 - a))
         c = 2 * asin(sqrt(a))
-        return c
+        return c * 6371
 
     @staticmethod
     def convert_from_string(string: str):

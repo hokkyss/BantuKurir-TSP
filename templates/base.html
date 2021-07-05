@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="bg-image">
   <head>
     <!-- Head -->
     {% block head %} {% endblock head %}
@@ -17,26 +17,24 @@
     {% block style %} {% endblock style %}
   </head>
 
-  <div id="bg-image">
-    <div class="navbar">
-      <a class="navbar-item" href="{{ url_for('fill_input') }}" title="Input">
-        Home
-      </a>
-      <a class="navbar-item" href="{{ url_for('result') }}" title="Result">
-        Result
-      </a>
-    </div>
-
-    <div class="container">
-      <!-- ======= Content ======= -->
-      {% block content %} {% endblock content %}
-    </div>
-    <footer>
-      <div class="footer">
-        &copy; 2021 <a href="https://github.com/hokkyss">Hokki Suwanda</a>
-      </div>
-    </footer>
-    <!-- Script -->
-    {% block script %} {% endblock script %}
+  <div class="navbar">
+    <a class="navbar-item" href="{{ url_for('fill_input') }}" title="Input">
+      Home
+    </a>
+    <a class="navbar-item" href="{{ url_for('result') }}" title="Result">
+      Result
+    </a>
   </div>
+
+  <div class="container">
+    <!-- ======= Content ======= -->
+    {% block content %} {% endblock content %}
+  </div>
+  <footer>
+    <div class="footer">
+      &copy; 2021 <a href="https://github.com/hokkyss">Hokki Suwanda</a>
+    </div>
+  </footer>
+  <!-- Script -->
+  {% block script %} {% endblock script %}
 </html>
