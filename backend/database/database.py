@@ -96,7 +96,6 @@ def get_by_name_and_date(sender: str, sent_on: date=datetime.now().date):
 
     return all_attributes
 
-'''
 def delete():
     DB_HOST = os.getenv("DB_HOST")
     DB_USERNAME = os.getenv("DB_USERNAME")
@@ -114,4 +113,3 @@ def delete():
     cursor = database.cursor()
 
     cursor.execute("DELETE FROM " + DB_TABLE_NAME)
-'''

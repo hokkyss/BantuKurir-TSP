@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, session, url_for, jsonify
 from backend import *
-from datetime import date
+from datetime import date, timedelta
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -98,14 +98,20 @@ def third_step_validation():
                 matrix[i][j] = Location.haversine(locations[i], locations[j])
     
     graph = Graph(first_city_name=start, adj_matrix=matrix, city_list=city_list)
-    path, cost = graph.BranchAndBound()
+    path, distance = graph.BranchAndBound()
     path.append(start)
 
-    temp_path = {"distance": cost, "path": [
+    duration_in_seconds = 3600 * float(distance) / float(session.get("speed"))
+    duration = timedelta(seconds=duration_in_seconds)
+    duration = str(duration)
+    # remove the miliseconds
+    duration = duration[0 : len(duration) - 7 : 1]
+
+    temp_result = {"duration": duration, "sender": session.get("sender"), "sent_on": session.get("sent_on"), "speed": session.get("speed"), "distance": distance, "path": [
         locations[city_list.index(city)] for city in path
     ]}
 
-    push(sender=session.get("sender"), locations=session.get("locations"), result=temp_path, start=session.get("start"), speed=session.get("speed"), sent_on=session.get("sent_on"))
+    push(sender=session.get("sender"), locations=session.get("locations"), result=temp_result, start=session.get("start"), speed=session.get("speed"), sent_on=session.get("sent_on"))
 
     if (session.get("start") == None):
         return redirect(url_for('third_step'))
@@ -117,25 +123,23 @@ def result():
     if (request.method == "POST"):
         redirect(url_for("result"))
 
-    # has just filled the form until the very last step
-    if (session.get("start") != None):
-        sender = session["sender"]
-        sent_on = session["sent_on"]
+    if (request.form.get("sender") == None):
+        sender = session.get("sender")
+        sent_on = session.get("sent_on")
     else:
+        session.clear()
         sender = request.form.get("sender")
         sent_on = request.form.get("sent_on")
-
-    session.clear()
 
     if(sender == None):
         return render_template('result.html', need_alert=False, locations=None, result=None)
 
-    if(sent_on == None):
+    if(sent_on == None or sent_on == ""):
         sent_on = date.today()
 
     result = get_by_name_and_date(sender=sender, sent_on=sent_on)
     try:
-        (_, sender, date, locations, start, result, speed) = result
+        (_, sender, sent_on, locations, start, result, speed) = result
         locations = locations.decode("UTF8")
         locations = from_JSON(locations)
         result  = result.decode("UTF8")

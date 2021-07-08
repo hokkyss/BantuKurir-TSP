@@ -8,7 +8,7 @@
 />
 <style>
   #map {
-    width: 100vw;
+    width: 70vw;
     height: 440px;
   }
 </style>
@@ -34,6 +34,48 @@
     <input type="submit" value="search" />
   </div>
 </form>
+{% if result %}
+<div class="middle">
+  <table class="middle-left">
+    <tr>
+      <th>No</th>
+      <th>Location</th>
+      <th>Longitude</th>
+      <th>Latitude</th>
+    </tr>
+    {% for res in result["path"] %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ res["name"] }}</td>
+      <td>{{ res["lng"] }}</td>
+      <td>{{ res["lat"] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <table class="middle-right" style="display: flex; flex-direction: column">
+    <tr>
+      <th>Sender</th>
+      <td>{{ result["sender"] }}</td>
+    </tr>
+    <tr>
+      <th>Sent on</th>
+      <td>{{ result["sent_on"] }}</td>
+    </tr>
+    <tr>
+      <th>Avg. Speed</th>
+      <td>{{ result["speed"] }} km/h</td>
+    </tr>
+    <tr>
+      <th>Estimated distance</th>
+      <td>{{ result["distance"] }} km</td>
+    </tr>
+    <tr>
+      <th>Estimated time</th>
+      <td>{{ result["duration"] }}</td>
+    </tr>
+  </table>
+</div>
+{% endif %}
 <div class="bottom">
   <div id="map" class="map"></div>
 </div>
