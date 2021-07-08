@@ -1,0 +1,42 @@
+{
+  "kurir": "KurirA",
+  "tanggal": "2021-07-08",
+  "kecepatan": 30.5,
+  "lokasi": [
+    {
+      "lokasi": "ITB",
+      "longitude": 107.61042306220311,
+      "latitude": -6.892662290291829
+    },
+    {
+      "lokasi": "Tubagus Ismail",
+      "longitude": 107.61933462542352,
+      "latitude": -6.884812611227394
+    },
+    {
+      "lokasi": "JNE",
+      "longitude": 107.59803701346408,
+      "latitude": -6.920062540992319
+    },
+    {
+      "lokasi": "DU",
+      "longitude": 107.61716539658791,
+      "latitude": -6.890868517012231
+    },
+    {
+      "lokasi": "Cisitu",
+      "longitude": 107.61201769658783,
+      "latitude": -6.879707211758447
+    },
+    {
+      "lokasi": "Sudirman",
+      "longitude": 107.57315830414196,
+      "latitude": -6.916276731736308
+    },
+    {
+      "lokasi": "Asia Afrika",
+      "longitude": 107.61495731193087,
+      "latitude": -6.922032439292828
+    }
+  ]
+}

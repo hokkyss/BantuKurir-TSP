@@ -11,7 +11,11 @@ def init():
     DB_USERNAME = os.getenv("DB_USERNAME")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_NAME = os.getenv("DB_NAME")
+    if (DB_NAME == ""):
+        DB_NAME = 'BantuKurirTSP'
     DB_TABLE_NAME = os.getenv("TABLE_NAME")
+    if (DB_TABLE_NAME == ""):
+        DB_TABLE_NAME = 'COURIER'
 
     database = mysql.connect(
         host=DB_HOST,
@@ -30,7 +34,11 @@ def push(sender: str, locations: list, start: str, result: list, speed: float, s
     DB_USERNAME = os.getenv("DB_USERNAME")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_NAME = os.getenv("DB_NAME")
+    if (DB_NAME == ""):
+        DB_NAME = 'BantuKurirTSP'
     DB_TABLE_NAME = os.getenv("TABLE_NAME")
+    if (DB_TABLE_NAME == ""):
+        DB_TABLE_NAME = 'COURIER'
 
     database = mysql.connect(
         host=DB_HOST,
@@ -56,7 +64,11 @@ def get_latest():
     DB_USERNAME = os.getenv("DB_USERNAME")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_NAME = os.getenv("DB_NAME")
+    if (DB_NAME == ""):
+        DB_NAME = 'BantuKurirTSP'
     DB_TABLE_NAME = os.getenv("TABLE_NAME")
+    if (DB_TABLE_NAME == ""):
+        DB_TABLE_NAME = 'COURIER'
 
     database = mysql.connect(
         host=DB_HOST,
@@ -77,7 +89,11 @@ def get_by_name_and_date(sender: str, sent_on: date=datetime.now().date):
     DB_USERNAME = os.getenv("DB_USERNAME")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_NAME = os.getenv("DB_NAME")
+    if (DB_NAME == ""):
+        DB_NAME = 'BantuKurirTSP'
     DB_TABLE_NAME = os.getenv("TABLE_NAME")
+    if (DB_TABLE_NAME == ""):
+        DB_TABLE_NAME = 'COURIER'
 
     database = mysql.connect(
         host=DB_HOST,
@@ -101,7 +117,11 @@ def delete():
     DB_USERNAME = os.getenv("DB_USERNAME")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_NAME = os.getenv("DB_NAME")
+    if (DB_NAME == ""):
+        DB_NAME = 'BantuKurirTSP'
     DB_TABLE_NAME = os.getenv("TABLE_NAME")
+    if (DB_TABLE_NAME == ""):
+        DB_TABLE_NAME = 'COURIER'
 
     database = mysql.connect(
         host=DB_HOST,
