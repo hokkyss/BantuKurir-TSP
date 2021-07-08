@@ -34,4 +34,8 @@ Pure [Flask](https://flask.palletsprojects.com/en/2.0.x/) is used for the fronte
 
 ## Running the app
 
-run `python app.py`
+run `./run`
+
+## Running the app manually
+
+run `python app.py` and open [http://localhost:5000](http://localhost:5000)
